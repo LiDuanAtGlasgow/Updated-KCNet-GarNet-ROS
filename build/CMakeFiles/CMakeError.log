@@ -1,0 +1,55 @@
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/kentuen/ros_ws/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_c2acd/fast"
+/usr/bin/make -f CMakeFiles/cmTC_c2acd.dir/build.make CMakeFiles/cmTC_c2acd.dir/build
+make[1]: Entering directory '/home/kentuen/ros_ws/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_c2acd.dir/CheckSymbolExists.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_c2acd.dir/CheckSymbolExists.c.o   -c /home/kentuen/ros_ws/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_c2acd
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c2acd.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_c2acd.dir/CheckSymbolExists.c.o  -o cmTC_c2acd -rdynamic 
+CMakeFiles/cmTC_c2acd.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_c2acd.dir/build.make:97: recipe for target 'cmTC_c2acd' failed
+make[1]: *** [cmTC_c2acd] Error 1
+make[1]: Leaving directory '/home/kentuen/ros_ws/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_c2acd/fast' failed
+make: *** [cmTC_c2acd/fast] Error 2
+
+File /home/kentuen/ros_ws/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/kentuen/ros_ws/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_5f254/fast"
+/usr/bin/make -f CMakeFiles/cmTC_5f254.dir/build.make CMakeFiles/cmTC_5f254.dir/build
+make[1]: Entering directory '/home/kentuen/ros_ws/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_5f254.dir/CheckFunctionExists.c.o
+/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_5f254.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.5/Modules/CheckFunctionExists.c
+Linking C executable cmTC_5f254
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5f254.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTC_5f254.dir/CheckFunctionExists.c.o  -o cmTC_5f254 -rdynamic -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_5f254.dir/build.make:97: recipe for target 'cmTC_5f254' failed
+make[1]: *** [cmTC_5f254] Error 1
+make[1]: Leaving directory '/home/kentuen/ros_ws/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_5f254/fast' failed
+make: *** [cmTC_5f254/fast] Error 2
+
+
