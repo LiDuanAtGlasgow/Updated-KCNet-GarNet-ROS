@@ -54,10 +54,10 @@ cloud_cb (const sensor_msgs::PointCloud2ConstPtr& input)
   pcl::PointXYZRGB pt_color;
   tf::TransformListener listener;
   tf::StampedTransform transform;
-  float gripper_x=0.5920641946;								
+  float gripper_x=0.5920641946;							
   float gripper_y=0.0848949198;
   float gripper_z=0.1622691103;
-  //float gripper_x=0.4384432518;							
+  float gripper_x=0.4384432518;
   //float gripper_y=0.1559404069;
   //float gripper_z=0.3121685513;
   float min_dis=100;
@@ -91,8 +91,8 @@ cloud_cb (const sensor_msgs::PointCloud2ConstPtr& input)
           float x_display=temp_cloud_2->points[i].x;
           float y_display=temp_cloud_2->points[i].y;
           float z_display=temp_cloud_2->points[i].z;
-          ROS_INFO("temp_cloud->points x:[%f], y:[%f], z[%f], cout[%i]",x_temp,y_temp,z_temp,count);
-          ROS_INFO("temp_cloud_2->points x:[%f], y:[%f], z[%f], cout[%i]",x_display,y_display,z_display,count);
+          //ROS_INFO("temp_cloud->points x:[%f], y:[%f], z[%f], cout[%i]",x_temp,y_temp,z_temp,count);
+          //ROS_INFO("temp_cloud_2->points x:[%f], y:[%f], z[%f], cout[%i]",x_display,y_display,z_display,count);
           float dis=sqrt(pow((gripper_x-x_display),2)+pow((gripper_y-y_display),2)+pow((gripper_z-z_display),2));
           if (min_dis>dis){
             min_dis=dis;
