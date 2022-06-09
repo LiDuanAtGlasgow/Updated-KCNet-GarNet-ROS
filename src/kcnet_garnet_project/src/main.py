@@ -280,7 +280,7 @@ if args.test_procceding==1:
         for i in range(len(image)):
             if idx<=15:
                 for j in range(len(image[i])):
-                    if 40<image[i][j]<45:
+                    if 40<image[i][j]<50:
                         if 20<j<460 and 295>i>270:
                             mask[i][j]=0
             if 15<idx:
