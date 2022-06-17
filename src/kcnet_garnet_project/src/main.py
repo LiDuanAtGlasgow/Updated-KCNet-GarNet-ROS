@@ -280,12 +280,12 @@ if args.test_procceding==1:
         for i in range(len(image)):
             if idx<=15:
                 for j in range(len(image[i])):
-                    if 40<image[i][j]<50:
+                    if 40<image[i][j]<55:
                         if 20<j<460 and 295>i>270:
                             mask[i][j]=0
             if 15<idx:
                 for j in range(len(image[i])):
-                    if 0<image[i][j]<50:
+                    if 0<image[i][j]<55:
                         if 20<j<460 and 240>i>270-int(((250/45)*(idx-14))):
                         #if 20<j<360 and 240>i>20: #for shirt
                             mask[i][j]=0

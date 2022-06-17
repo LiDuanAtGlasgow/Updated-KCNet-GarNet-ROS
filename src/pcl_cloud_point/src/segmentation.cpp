@@ -43,6 +43,8 @@ cloud_cb (const sensor_msgs::PointCloud2ConstPtr& input)
   sor.filter (cloud_filtered);
   sensor_msgs::PointCloud2 pcl_in;
   sensor_msgs::PointCloud2 pcl_out;
+  sensor_msgs::PointCloud2 pcl_gripper_in;
+  sensor_msgs::PointCloud2 pcl_gripper_out;
   pcl_conversions::fromPCL(cloud_filtered, pcl_in);
   pcl::PointCloud<pcl::PointXYZ>::Ptr temp_cloud(new pcl::PointCloud<pcl::PointXYZ>);
   pcl::fromPCLPointCloud2(cloud_filtered,*temp_cloud);
@@ -51,15 +53,18 @@ cloud_cb (const sensor_msgs::PointCloud2ConstPtr& input)
   float y_temp=0;
   int count=0;
   pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud_pub(new pcl::PointCloud<pcl::PointXYZRGB>);
+  pcl::PointCloud<pcl::PointXYZ> pointCloud_gripper;
   pcl::PointXYZRGB pt_color;
+  pcl::PointXYZ pt_gripper;
   tf::TransformListener listener;
   tf::StampedTransform transform;
-  //float gripper_x=0.5920641946;	
-  //float gripper_y=0.0848949198;
-  //float gripper_z=0.1622691103;
-  float gripper_x=0.4384432518;
-  float gripper_y=0.1559404069;
-  float gripper_z=0.3121685513;
+  tf::StampedTransform transform_gripper;
+  //float gripper_x=0.529777389;						
+  //float gripper_y=0.0138740378;
+  //float gripper_z=-0.2289982221;
+  float gripper_x=0.3312817991;					
+  float gripper_y=0.2546367648;
+  float gripper_z=-0.1793251894;
   float min_dis=100;
   float target_x=0;
   float target_y=0;
@@ -67,6 +72,11 @@ cloud_cb (const sensor_msgs::PointCloud2ConstPtr& input)
   float targethec_x=0;
   float targethec_y=0;
   float targethec_z=0;
+  pt_gripper.x=gripper_x;
+  pt_gripper.y=gripper_y;
+  pt_gripper.z=gripper_z;
+  pointCloud_gripper.push_back(pt_gripper);
+  pcl::toROSMsg(pointCloud_gripper,pcl_gripper_in);
   for(int i = 0 ; i < temp_cloud->points.size(); ++i){
   x_temp = temp_cloud->points[i].x;
   y_temp = temp_cloud->points[i].y;
@@ -74,11 +84,18 @@ cloud_cb (const sensor_msgs::PointCloud2ConstPtr& input)
   count=count+1;
   listener.waitForTransform("/base", "/camera_depth_optical_frame", ros::Time(), ros::Duration(10.0));
   listener.lookupTransform("/base", "/camera_depth_optical_frame",  ros::Time(0), transform);
+  listener.waitForTransform( "/camera_depth_optical_frame","/base", ros::Time(), ros::Duration(10.0));
+  listener.lookupTransform( "/camera_depth_optical_frame","/base",  ros::Time(0), transform_gripper);
   pcl_ros::transformPointCloud("/base",transform,pcl_in, pcl_out);
+  pcl_ros::transformPointCloud("/base",transform_gripper,pcl_gripper_in,pcl_gripper_out);
   pcl::PCLPointCloud2 pcl_pc2;
+  pcl::PCLPointCloud2 pcl_gripper_pc2;
   pcl_conversions::toPCL(pcl_out,pcl_pc2);
+  pcl_conversions::toPCL(pcl_gripper_out,pcl_gripper_pc2);
   pcl::PointCloud<pcl::PointXYZ>::Ptr temp_cloud_2(new pcl::PointCloud<pcl::PointXYZ>);
+  pcl::PointCloud<pcl::PointXYZ>::Ptr temp_cloud_gripper_2(new pcl::PointCloud<pcl::PointXYZ>);
   pcl::fromPCLPointCloud2(pcl_pc2,*temp_cloud_2);
+  pcl::fromPCLPointCloud2(pcl_gripper_pc2,*temp_cloud_gripper_2);
   if (z_temp<1.2){
       if (z_temp>0){
           pt_color.x = temp_cloud->points[i].x;
@@ -105,6 +122,13 @@ cloud_cb (const sensor_msgs::PointCloud2ConstPtr& input)
           }
       }
   }
+  pt_color.x = temp_cloud_gripper_2->points[0].x;
+  pt_color.y = temp_cloud_gripper_2->points[0].y;
+  pt_color.z = temp_cloud_gripper_2->points[0].z;
+  pt_color.r=static_cast<int> (255);
+  pt_color.g=static_cast<int> (255);
+  pt_color.b=static_cast<int> (0);
+  cloud_pub->points.push_back(pt_color);
 }
 pt_color.x = target_x;
 pt_color.y = target_y;

@@ -24,11 +24,11 @@ def routes_writing():
     print('left_pose:',left_pose)                                                 
     csv_writer.writerow((1,right_pose.position.x,right_pose.position.y,right_pose.position.z,right_pose.orientation.x,right_pose.orientation.y
     ,right_pose.orientation.z,right_pose.orientation.w,left_pose.position.x,left_pose.position.y,left_pose.position.z,left_pose.orientation.x,
-    left_pose.orientation.y,left_pose.orientation.z,left_pose.orientation.w,'right','open'))
+    left_pose.orientation.y,left_pose.orientation.z,left_pose.orientation.w,'left','w_r_o_l_c'))
 
 if __name__ == '__main__':
     try:
-        name='./designing_stage_1.csv'                                                                                                                                                                                                  
+        name='./routes/tshirts/pos_0010/routes.csv'                                                                                                                                                                                                  
         f=open(name,'a')
         csv_writer=csv.writer(f)
         routes_writing()
